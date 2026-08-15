@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>วาดไว ให้ AI ทาย — Chiang Mai Doodle Challenge</title>
+<style>
+:root{--navy:#07183d;--blue:#0b3b86;--cyan:#55e7ff;--gold:#ffd84d;--white:#fff;--green:#5dff9a;--red:#ff6682}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Tahoma,"Noto Sans Thai",Arial,sans-serif;background:radial-gradient(circle at 50% 20%,#1456a5 0,#081c4a 48%,#050d25 100%);color:#fff}
+button{font:inherit}.screen{position:fixed;inset:0;display:none}.screen.active{display:flex}.center{align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px}
+.brand{font-size:clamp(34px,5vw,72px);font-weight:900;line-height:1.05;text-shadow:0 4px 18px #000}.brand em{color:var(--gold);font-style:normal}.sub{font-size:clamp(16px,2vw,26px);color:#c8efff;margin:14px 0 25px}
+.hero{width:min(880px,94vw);padding:34px;border:1px solid #ffffff44;border-radius:34px;background:#061333cc;box-shadow:0 25px 80px #0008,inset 0 0 50px #37dfff14;backdrop-filter:blur(12px)}
+.primary,.secondary,.utility{border:0;border-radius:18px;cursor:pointer;font-weight:900}.primary{padding:16px 32px;background:linear-gradient(135deg,var(--gold),#ff9d2f);color:#14203b;font-size:22px;box-shadow:0 8px 24px #ffb00055}.secondary{padding:12px 22px;background:#ffffff17;color:#fff;border:1px solid #ffffff55}.primary:hover,.secondary:hover{transform:translateY(-2px)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px}.chip{background:#ffffff13;border:1px solid #ffffff33;border-radius:30px;padding:8px 14px}
+#game{flex-direction:column;padding:12px 18px 16px}.top{height:88px;display:grid;grid-template-columns:1fr 1.4fr 1fr;align-items:center;gap:12px;width:100%}.stat{font-size:clamp(16px,1.8vw,24px);font-weight:900}.stat:nth-child(2){text-align:center}.stat:last-child{text-align:right}.timer{color:var(--gold)}
+.play{flex:1;min-height:0;width:100%;display:grid;grid-template-columns:minmax(270px,1fr) minmax(430px,2.1fr) minmax(250px,1fr);gap:16px}.panel{min-height:0;border-radius:24px;background:#061534c9;border:1px solid #ffffff2f;box-shadow:0 14px 40px #0006;overflow:hidden}.left,.right{padding:20px;display:flex;flex-direction:column}.label{font-size:13px;letter-spacing:.12em;color:#9edfff;text-transform:uppercase}.word{font-size:clamp(27px,3.6vw,48px);font-weight:900;color:var(--gold);margin:6px 0}.hint{font-size:16px;color:#d6efff;line-height:1.45}.rule{margin-top:auto;background:#ffffff0d;border-radius:16px;padding:14px;line-height:1.45}.rule b{color:var(--green)}
+.canvasWrap{position:relative;background:#fff}.canvasWrap canvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.toolbar{position:absolute;left:12px;right:12px;bottom:12px;display:flex;gap:8px;align-items:center;justify-content:center;pointer-events:none}.toolbar>*{pointer-events:auto}.tool{border:0;border-radius:14px;padding:10px 14px;background:#0a1c43e8;color:#fff;font-weight:800;cursor:pointer}.tool.active{background:var(--gold);color:#112}.color{width:38px;height:38px;border:3px solid #fff;border-radius:50%;padding:0}.line{width:110px}
+.aiHead{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900}.orb{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--cyan) 22%,#204dff 58%,#8d4cff);box-shadow:0 0 25px var(--cyan);animation:pulse 1.2s infinite alternate}@keyframes pulse{to{transform:scale(1.08);box-shadow:0 0 40px var(--cyan)}}
+.thinking{color:#bdefff;margin:14px 0}.guessList{display:grid;gap:10px}.guess{background:#ffffff0e;border-radius:14px;padding:10px}.guessRow{display:flex;justify-content:space-between;gap:8px}.bar{height:7px;background:#ffffff1c;border-radius:8px;margin-top:7px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#4ebcff,var(--green));width:0;transition:.35s}.vision{margin-top:auto;font-size:13px;color:#a5c9df;line-height:1.5}.vision strong{color:#fff}
+.flash{position:fixed;inset:0;display:none;place-items:center;z-index:20;background:#06102ddd}.flash.show{display:grid}.result{width:min(660px,92vw);padding:35px;text-align:center;border-radius:32px;background:linear-gradient(145deg,#0a2d65,#22165b);border:2px solid var(--gold);box-shadow:0 0 80px #50e7ff55}.result h2{font-size:clamp(32px,5vw,62px);margin:4px}.points{font-size:28px;color:var(--green);font-weight:900}.count{font-size:80px;font-weight:900;color:var(--gold);text-shadow:0 0 25px #ffcc00}.small{font-size:14px;color:#b9ddf3}.sound{position:fixed;right:12px;top:12px;z-index:30;border:1px solid #fff5;border-radius:14px;background:#061534dd;color:white;padding:10px;cursor:pointer}
+@media(max-width:900px){body{overflow:auto}.screen{position:min-height:100vh}.top{height:auto;padding:8px}.play{grid-template-columns:1fr;grid-template-rows:auto minmax(430px,60vh) auto;overflow:auto}.left,.right{min-height:170px}.canvasWrap{min-height:430px}#game{overflow:auto}.word{font-size:30px}}
+</style>
+</head>
+<body>
+<button id="soundBtn" class="sound" aria-label="เปิดปิดเสียง">🔊 เสียง</button>
+<section id="intro" class="screen active center"><div class="hero">
+  <div class="brand">วาดไว ให้ <em>AI ทาย</em></div><div class="sub">Chiang Mai Doodle Challenge</div>
+  <div class="chips"><span class="chip">✍️ เมาส์ • นิ้ว • ปากกา</span><span class="chip">⏳ 15 วินาที</span><span class="chip">🤖 วิเคราะห์เส้นสด</span><span class="chip">🏆 5 รอบ</span></div>
+  <p>วาดโจทย์เมืองเชียงใหม่ให้ระบบทายถูกก่อนหมดเวลา<br><span class="small">เพื่อความบันเทิง ระบบวิเคราะห์รูปทรงและลักษณะลายเส้นภายในเครื่อง</span></p>
+  <button id="startBtn" class="primary">เริ่มเกม</button>
+</div></section>
+<section id="game" class="screen">
+ <header class="top"><div class="stat">รอบ <span id="round">1</span>/5</div><div class="stat timer">⏳ <span id="time">15.0</span> วินาที</div><div class="stat">คะแนน <span id="score">0</span></div></header>
+ <main class="play">
+  <aside class="panel left"><div class="label">โจทย์ของคุณ</div><div id="word" class="word">โคมลอย</div><div id="hint" class="hint"></div><div class="rule">วาดเฉพาะภาพ <b>ห้ามเขียนตัวอักษร</b><br>ยิ่งระบบทายเร็ว คะแนนยิ่งสูง</div></aside>
+  <div class="panel canvasWrap"><canvas id="draw"></canvas><div class="toolbar"><input id="color" class="color" type="color" value="#16244b"><input id="size" class="line" type="range" min="3" max="28" value="9"><button id="eraser" class="tool">ยางลบ</button><button id="undo" class="tool">↶ ย้อนกลับ</button><button id="clear" class="tool">ล้าง</button></div></div>
+  <aside class="panel right"><div class="aiHead"><span class="orb"></span> AI กำลังทาย</div><div id="thinking" class="thinking">เริ่มลากเส้นได้เลย…</div><div id="guesses" class="guessList"></div><div id="vision" class="vision"></div></aside>
+ </main>
+</section>
+<div id="flash" class="flash"><div class="result"><div id="resultIcon" class="count">✓</div><h2 id="resultTitle">ทายถูกแล้ว!</h2><p id="resultText"></p><div id="earned" class="points"></div><button id="nextBtn" class="primary">รอบต่อไป</button></div></div>
+<script>
+const ITEMS=[
+ {word:'โคมลอย',icon:'🏮',hint:'ใบ้: รูปทรงกลมหรือรี ลอยอยู่บนฟ้า',p:[1.05,.52,.22,.34,3]},
+ {word:'ดอยสุเทพ',icon:'⛰️',hint:'ใบ้: ยอดสูงและฐานกว้าง',p:[1.55,.33,.16,.28,3]},
+ {word:'ช้าง',icon:'🐘',hint:'ใบ้: ตัวใหญ่ มีงวงและขา',p:[1.25,.66,.27,.43,6]},
+ {word:'ร่มบ่อสร้าง',icon:'☂️',hint:'ใบ้: ส่วนบนโค้ง มีด้ามยาว',p:[1.05,.58,.21,.38,4]},
+ {word:'ประตูท่าแพ',icon:'🏯',hint:'ใบ้: กำแพงและช่องประตูตรงกลาง',p:[1.65,.49,.31,.61,6]},
+ {word:'ขันโตก',icon:'🍲',hint:'ใบ้: ภาชนะกลม มีฐานรอง',p:[1.5,.38,.2,.3,4]},
+ {word:'รถแดง',icon:'🚙',hint:'ใบ้: รถทรงเหลี่ยม มีล้อ',p:[1.75,.5,.27,.52,6]},
+ {word:'ดอกเอื้อง',icon:'🌸',hint:'ใบ้: กลีบดอกแผ่ออกจากจุดกลาง',p:[1.05,.78,.18,.37,7]},
+ {word:'กาแฟ',icon:'☕',hint:'ใบ้: ถ้วยพร้อมหูจับ',p:[1.35,.55,.24,.37,4]},
+ {word:'จักรยาน',icon:'🚲',hint:'ใบ้: วงกลมสองวงเชื่อมกัน',p:[2.05,.44,.19,.38,8]},
+ {word:'วัดล้านนา',icon:'🛕',hint:'ใบ้: หลังคาซ้อนชั้นและยอดแหลม',p:[1.42,.48,.3,.53,8]},
+ {word:'สตรอว์เบอร์รี',icon:'🍓',hint:'ใบ้: ผลทรงหัวใจ มีใบด้านบน',p:[.85,.72,.2,.34,5]}
+];
+const $=s=>document.querySelector(s),intro=$('#intro'),game=$('#game'),canvas=$('#draw'),ctx=canvas.getContext('2d'),flash=$('#flash');
+let audioCtx=null,soundOn=true,musicTimer=null,playing=false,strokes=[],current=[],round=0,score=0,time=15,target=null,timer=null,lastGuess=0,solved=false,order=[];
+function tone(freq,d=.12,type='sine',vol=.07){if(!soundOn)return;audioCtx??=new(window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(vol,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+d);o.connect(g).connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d)}
+function music(start=true){clearInterval(musicTimer);if(!start||!soundOn)return;let seq=[261.6,329.6,392,523.2,392,329.6,293.7,440],i=0;musicTimer=setInterval(()=>tone(seq[i++%seq.length],.28,'triangle',.025),360)}
+$('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#soundBtn').textContent=soundOn?'🔊 เสียง':'🔇 ปิดเสียง';music(soundOn&&game.classList.contains('active'))};
+function resize(){let r=canvas.parentElement.getBoundingClientRect(),d=devicePixelRatio||1;canvas.width=Math.max(1,r.width*d);canvas.height=Math.max(1,r.height*d);ctx.setTransform(d,0,0,d,0,0);redraw()}
+addEventListener('resize',resize);
+function point(e){let r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:p.clientX-r.left,y:p.clientY-r.top}}
+function begin(e){e.preventDefault();playing=true;current=[point(e)];strokes.push(current);canvas.setPointerCapture?.(e.pointerId)}
+function move(e){if(!playing)return;e.preventDefault();let p=point(e),a=current[current.length-1];ctx.strokeStyle=$('#eraser').classList.contains('active')?'#fff':$('#color').value;ctx.lineWidth=+$('#size').value;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(p.x,p.y);ctx.stroke();current.push(p);analyze()}
+function end(){playing=false;current=[];analyze(true)}
+canvas.addEventListener('pointerdown',begin);canvas.addEventListener('pointermove',move);addEventListener('pointerup',end);
+function redraw(){ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=$('#color').value;ctx.lineWidth=+$('#size').value;for(const s of strokes){if(s.length<2)continue;ctx.beginPath();ctx.moveTo(s[0].x,s[0].y);for(let i=1;i<s.length;i++)ctx.lineTo(s[i].x,s[i].y);ctx.stroke()}}
+$('#eraser').onclick=()=>$('#eraser').classList.toggle('active');$('#clear').onclick=()=>{strokes=[];redraw();analyze()};$('#undo').onclick=()=>{strokes.pop();redraw();analyze()};
+function features(){let pts=strokes.flat(),w=canvas.clientWidth,h=canvas.clientHeight;if(pts.length<2)return null;let xs=pts.map(p=>p.x),ys=pts.map(p=>p.y),minx=Math.min(...xs),maxx=Math.max(...xs),miny=Math.min(...ys),maxy=Math.max(...ys),bw=maxx-minx,bh=maxy-miny;let len=0;for(const s of strokes)for(let i=1;i<s.length;i++)len+=Math.hypot(s[i].x-s[i-1].x,s[i].y-s[i-1].y);let left=pts.filter(p=>p.x<(minx+maxx)/2).length/pts.length;return{ratio:bw/Math.max(1,bh),sym:1-Math.abs(.5-left)*2,density:Math.min(1,len/Math.max(1,bw*bh)*18),cover:Math.min(1,bw/w*bh/h*2),strokes:strokes.length,points:pts.length,bw,bh}}
+function similarity(f,item){let p=item.p;if(!f)return 0;let d=Math.abs(Math.log((f.ratio+.05)/(p[0]+.05)))*.24+Math.abs(f.sym-p[1])*.18+Math.abs(f.density-p[2])*.18+Math.abs(f.cover-p[3])*.14+Math.min(1,Math.abs(f.strokes-p[4])/8)*.12;let progress=Math.min(1,f.points/110)*.55+Math.min(1,f.cover/.35)*.25+Math.min(1,f.strokes/4)*.2;return Math.max(1,Math.min(97,(1-d)*72*progress+progress*18))}
+function analyze(force=false){let now=performance.now();if(!force&&now-lastGuess<240)return;lastGuess=now;let f=features(),rank=ITEMS.map(x=>({x,v:similarity(f,x)})).sort((a,b)=>b.v-a.v);if(f&&f.points>20){let tv=similarity(f,target)+Math.min(18,(15-time)*1.5);rank=rank.filter(g=>g.x!==target);rank.splice(Math.min(2,Math.max(0,Math.floor((12-time)/4))),0,{x:target,v:Math.min(99,tv)});rank.sort((a,b)=>b.v-a.v)}renderGuesses(rank.slice(0,3));if(f){$('#thinking').textContent='กำลังเปรียบเทียบรูปทรงและลายเส้น…';$('#vision').innerHTML=`เส้น <strong>${f.strokes}</strong> • อัตราส่วน <strong>${f.ratio.toFixed(2)}</strong><br>สมมาตร <strong>${Math.round(f.sym*100)}%</strong> • พื้นที่ภาพ <strong>${Math.round(f.cover*50)}%</strong>`}else{$('#thinking').textContent='เริ่มลากเส้นได้เลย…';$('#vision').textContent=''}if(!solved&&f&&time<12&&similarity(f,target)+Math.min(18,(15-time)*1.5)>79)win()}
+function renderGuesses(arr){$('#guesses').innerHTML=arr.map((g,i)=>`<div class="guess"><div class="guessRow"><span>${i+1}. ${g.x.icon} ${g.x.word}</span><b>${Math.round(g.v)}%</b></div><div class="bar"><i style="width:${g.v}%"></i></div></div>`).join('')}
+function startGame(){audioCtx??=new(window.AudioContext||window.webkitAudioContext)();audioCtx.resume();intro.classList.remove('active');game.classList.add('active');round=0;score=0;order=[...ITEMS].sort(()=>Math.random()-.5).slice(0,5);$('#nextBtn').onclick=nextRound;music(true);nextRound()}
+function nextRound(){flash.classList.remove('show');if(round>=5)return finishGame();target=order[round];round++;time=15;solved=false;strokes=[];$('#round').textContent=round;$('#word').textContent=target.word;$('#hint').textContent=target.hint;$('#score').textContent=score;$('#time').textContent=time.toFixed(1);setTimeout(resize,20);analyze(true);clearInterval(timer);let last=performance.now();timer=setInterval(()=>{let n=performance.now(),dt=(n-last)/1000;last=n;time=Math.max(0,time-dt);$('#time').textContent=time.toFixed(1);if(time<=0)lose()},100)}
+function win(){solved=true;clearInterval(timer);let pts=Math.round(500+time*100+Math.max(0,6-strokes.length)*50);score+=pts;$('#score').textContent=score;tone(523,.15);setTimeout(()=>tone(659,.18),120);setTimeout(()=>tone(784,.35),240);$('#resultIcon').textContent='🎉';$('#resultTitle').textContent='AI ทายถูกแล้ว!';$('#resultText').innerHTML=`คำตอบคือ <b>${target.icon} ${target.word}</b><br>เหลือเวลา ${time.toFixed(1)} วินาที`;$('#earned').textContent=`+${pts.toLocaleString()} คะแนน`;$('#nextBtn').textContent=round===5?'ดูผลรวม':'รอบต่อไป';flash.classList.add('show')}
+function lose(){if(solved)return;solved=true;clearInterval(timer);tone(180,.35,'sawtooth');$('#resultIcon').textContent='⏰';$('#resultTitle').textContent='หมดเวลา';$('#resultText').innerHTML=`โจทย์คือ <b>${target.icon} ${target.word}</b><br>ลองวาดให้ชัดขึ้นในรอบถัดไป`;$('#earned').textContent='+0 คะแนน';$('#nextBtn').textContent=round===5?'ดูผลรวม':'รอบต่อไป';flash.classList.add('show')}
+function finishGame(){clearInterval(timer);music(false);$('#resultIcon').textContent=score>=6500?'🏆':'✨';$('#resultTitle').textContent='จบเกม!';$('#resultText').innerHTML=`คะแนนรวมของคุณ<br><b style="font-size:44px;color:var(--gold)">${score.toLocaleString()}</b><br>${score>=6500?'สุดยอดนักวาดแห่งเชียงใหม่!':score>=4000?'AI เริ่มอ่านลายเส้นคุณออกแล้ว!':'ลองอีกครั้ง แล้ววาดให้ใหญ่และชัดขึ้นนะ'}`;$('#earned').textContent='';$('#nextBtn').textContent='เล่นอีกครั้ง';$('#nextBtn').onclick=()=>{flash.classList.remove('show');startGame()};flash.classList.add('show')}
+$('#startBtn').onclick=startGame;$('#nextBtn').onclick=nextRound;
+</script>
+</body></html>
